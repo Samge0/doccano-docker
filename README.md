@@ -12,3 +12,5 @@ docker run -itd --name doccano \
 ```
 
 Go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+
+![image](https://github.com/user-attachments/assets/45df12c0-35b5-48fd-86e1-fb05f2706f83)
