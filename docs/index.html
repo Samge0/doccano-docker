@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>doccano-docker - 修复版 Docker 镜像</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            400: '#5d6ce8',
+                            500: '#414dd8',
+                            600: '#343fb0',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans SC', 'Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Noto Serif SC', 'serif'],
+                        display: ['Manrope', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        body {
+            font-family: 'Noto Sans SC', 'Inter', system-ui, sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #414dd8 0%, #5d6ce8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .soft-shadow {
+            box-shadow: 0 4px 24px rgba(65, 77, 216, 0.12), 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-white to-slate-50 min-h-screen">
+    <!-- Top Nav -->
+    <nav class="sticky top-0 z-50 glass-card border-b border-slate-200/50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <img src="icon.png" alt="doccano-docker" class="w-9 h-9 rounded-lg">
+                    <span class="text-lg font-semibold text-slate-800">doccano-docker</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="https://github.com/samge/doccano" target="_blank" class="text-slate-600 hover:text-brand-500 transition-colors text-sm font-medium">GitHub</a>
+                    <a href="https://hub.docker.com/repository/docker/samge/doccano/tags" target="_blank" class="px-4 py-2 bg-gradient-to-r from-brand-500 to-brand-600 text-white rounded-lg text-sm font-semibold soft-shadow hover:shadow-lg transition-shadow">
+                        获取镜像
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-20 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-50 border border-brand-200/60 mb-8">
+                <span class="w-2 h-2 rounded-full bg-brand-500"></span>
+                <span class="text-sm text-brand-700 font-medium">修复版 v1.8.4</span>
+            </div>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-slate-900 mb-6 leading-tight">
+                doccano-docker
+                <span class="gradient-text">修复版</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+                解决了官方 <code class="px-2 py-0.5 bg-gradient-to-br from-blue-500 to-blue-600 shadow-sm shadow-blue-500/30 rounded text-white font-mono text-sm">doccano/doccano:1.8.4</code> 
+                镜像中 Custom REST Request 功能的 "no data available" 问题，更新 pip 依赖并重新构建。
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://hub.docker.com/repository/docker/samge/doccano/tags" target="_blank" class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-brand-500 to-brand-600 text-white rounded-xl font-semibold soft-shadow hover:shadow-lg transition-shadow">
+                    拉取镜像
+                </a>
+                <a href="https://github.com/samge/doccano" target="_blank" class="w-full sm:w-auto px-6 py-3 bg-white text-slate-700 rounded-xl font-semibold border border-slate-200 soft-shadow hover:bg-slate-50 transition-colors">
+                    查看 GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-slate-900 mb-12 text-center">核心特性</h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Feature 1 -->
+                <div class="glass-card rounded-2xl p-6 soft-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">依赖修复</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">更新了官方镜像的 pip 依赖，修复 Custom REST Request 功能的数据加载问题。</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="glass-card rounded-2xl p-6 soft-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">即插即用</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">单个 Docker 命令即可启动，包含所有必需的环境配置和依赖。</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="glass-card rounded-2xl p-6 soft-shadow">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7C5 4 4 5 4 7z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h8M8 8h8M8 16h6"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-slate-900 mb-2">数据持久化</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">支持数据卷挂载，确保您的标注数据安全持久，容器重启不丢失。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-slate-50/50">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-slate-900 mb-12 text-center">快速开始</h2>
+            
+            <!-- Step 1 -->
+            <div class="flex gap-6 mb-8">
+                <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center text-white font-bold text-lg">
+                    1
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-slate-900 mb-3">运行 Docker 容器</h3>
+                    <div class="bg-slate-900 rounded-xl p-4 overflow-x-auto">
+                        <pre class="text-sm text-slate-300 font-mono leading-relaxed">docker run -itd --name doccano \
+-e "ADMIN_USERNAME=admin" \
+-e "ADMIN_EMAIL=admin@example.com" \
+-e "ADMIN_PASSWORD=password" \
+-v ~/doccano/db:/data \
+-p 8000:8000 samge/doccano:1.8.4</pre>
+                    </div>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-brand-50 text-brand-700 rounded text-xs font-medium">环境变量配置</span>
+                        <span class="px-2 py-1 bg-brand-50 text-brand-700 rounded text-xs font-medium">数据卷挂载</span>
+                        <span class="px-2 py-1 bg-brand-50 text-brand-700 rounded text-xs font-medium">端口映射</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flex gap-6 mb-8">
+                <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center text-white font-bold text-lg">
+                    2
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-slate-900 mb-3">访问 Web 界面</h3>
+                    <p class="text-slate-600 mb-4">容器启动后，在浏览器中打开以下地址：</p>
+                    <a href="http://127.0.0.1:8000/" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-brand-500 text-white rounded-lg font-medium hover:bg-brand-600 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        http://127.0.0.1:8000/
+                    </a>
+                    <p class="text-sm text-slate-500 mt-3">使用配置的管理员账户登录即可开始标注</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="flex gap-6">
+                <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 flex items-center justify-center text-white font-bold text-lg">
+                    3
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-slate-900 mb-3">验证修复</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        登录后，创建一个项目并添加 Custom REST Request。现在应该能够正常加载数据，不再出现 "no data available" 错误。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold text-slate-900 mb-12 text-center">常见问题</h2>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <details class="glass-card rounded-xl soft-shadow group">
+                    <summary class="px-6 py-4 cursor-pointer font-semibold text-slate-900 flex items-center justify-between">
+                        为什么需要这个修复版？
+                        <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </summary>
+                    <div class="px-6 pb-4 text-slate-600 leading-relaxed">
+                        官方 <code class="px-1.5 py-0.5 bg-gradient-to-br from-blue-500 to-blue-600 shadow-sm shadow-blue-500/30 rounded text-white font-mono text-sm">doccano:1.8.4</code> 镜像在使用 Custom REST Request 功能时会出现 "no data available" 错误。这是因为镜像中的某些 pip 依赖版本不兼容。我基于官方镜像更新了这些依赖，修复了这个问题。
+                    </div>
+                </details>
+
+                <!-- FAQ Item 2 -->
+                <details class="glass-card rounded-xl soft-shadow group">
+                    <summary class="px-6 py-4 cursor-pointer font-semibold text-slate-900 flex items-center justify-between">
+                        数据存储在哪里？
+                        <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </summary>
+                    <div class="px-6 pb-4 text-slate-600 leading-relaxed">
+                        通过 <code class="px-1.5 py-0.5 bg-gradient-to-br from-blue-500 to-blue-600 shadow-sm shadow-blue-500/30 rounded text-white font-mono text-sm">-v ~/doccano/db:/data</code> 参数，所有数据都会持久化到您主机的 <code class="px-1.5 py-0.5 bg-gradient-to-br from-blue-500 to-blue-600 shadow-sm shadow-blue-500/30 rounded text-white font-mono text-sm">~/doccano/db</code> 目录。即使删除容器，数据也不会丢失。
+                    </div>
+                </details>
+
+                <!-- FAQ Item 3 -->
+                <details class="glass-card rounded-xl soft-shadow group">
+                    <summary class="px-6 py-4 cursor-pointer font-semibold text-slate-900 flex items-center justify-between">
+                        如何修改管理员密码？
+                        <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </summary>
+                    <div class="px-6 pb-4 text-slate-600 leading-relaxed">
+                        在运行 Docker 命令时，通过环境变量 <code class="px-1.5 py-0.5 bg-gradient-to-br from-blue-500 to-blue-600 shadow-sm shadow-blue-500/30 rounded text-white font-mono text-sm">ADMIN_PASSWORD</code> 设置。如果容器已经运行，可以删除容器后重新创建并指定新密码。
+                    </div>
+                </details>
+
+                <!-- FAQ Item 4 -->
+                <details class="glass-card rounded-xl soft-shadow group">
+                    <summary class="px-6 py-4 cursor-pointer font-semibold text-slate-900 flex items-center justify-between">
+                        这个镜像与官方镜像有什么区别？
+                        <svg class="w-5 h-5 text-slate-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </summary>
+                    <div class="px-6 pb-4 text-slate-600 leading-relaxed">
+                        唯一的区别是更新了 pip 依赖以修复 Custom REST Request 的数据加载问题。其他功能、配置和使用方式与官方镜像完全一致。
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 sm:px-6 lg:px-8 border-t border-slate-200/60 bg-slate-50/30">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <img src="icon.png" alt="doccano-docker" class="w-8 h-8 rounded-lg">
+                    <div>
+                        <p class="font-semibold text-slate-900">doccano-docker</p>
+                        <p class="text-sm text-slate-500">修复版 Docker 镜像</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="https://github.com/samge/doccano" target="_blank" class="text-slate-600 hover:text-brand-500 transition-colors text-sm font-medium">GitHub</a>
+                    <a href="https://hub.docker.com/repository/docker/samge/doccano/tags" target="_blank" class="text-slate-600 hover:text-brand-500 transition-colors text-sm font-medium">Docker Hub</a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-slate-200/60 text-center">
+                <p class="text-sm text-slate-500">© 2024 doccano-docker. 基于 MIT 许可证开源。</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
